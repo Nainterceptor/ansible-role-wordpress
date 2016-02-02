@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    DocumentRoot "{{ wordpress_path }}"
+    ErrorLog "/var/log/httpd/wordpress-error_log"
+    TransferLog "/var/log/httpd/wordpress-access_log"
+
+    <Directory />
+        Options +Indexes +FollowSymLinks +ExecCGI
+        AllowOverride All
+        Order deny,allow
+        Allow from all
+    Require all granted
+    </Directory>
+</VirtualHost>

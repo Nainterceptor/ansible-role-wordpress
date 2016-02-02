@@ -1,2 +1,53 @@
 ---
 # tasks file for Nainterceptor.wordpress
+- name: "Install httpd package"
+  yum: name={{ item }} state=present
+  when: ansible_distribution == 'CentOS'
+  with_items:
+      - httpd
+      - php
+      - php-gd
+      - php-mysql
+  notify:
+      - "Restart Apache"
+
+- name: "Download wordpress"
+  get_url: >
+    url=http://wordpress.org/latest.tar.gz
+    dest=/tmp/wordpress-latest.tar.gz
+
+- name: "Prepare - create Path"
+  file:
+    dest: "{{ wordpress_path }}"
+    state: directory
+    recurse: yes
+    group: apache
+    owner: apache
+
+- name: "Untar wordpress"
+  shell: "tar -C {{ wordpress_path }} --strip-components=1 -xvf /tmp/wordpress-latest.tar.gz"
+  args:
+    creates: "{{ wordpress_path }}/index.php"
+  become: yes
+  become_user: apache
+
+- name: "Configure wordpress"
+  template: src=../files/wp-config.php.j2 dest={{ wordpress_path }}/wp-config.php
+
+- name: "Replace httpd service"
+  copy: src=../files/httpd.service dest=/usr/lib/systemd/system/httpd.service
+  notify:
+    - "Enable Apache"
+    - "Restart Apache"
+
+- name: "Place httpd vhost"
+  template: src=../files/vhost.conf.j2 dest=/etc/httpd/conf.d/wordpress.conf
+  notify:
+    - "Restart Apache"
+
+- name: "Prepare - remove welcome vhost"
+  file:
+    dest: "/etc/httpd/conf.d/welcome.conf"
+    state: absent
+  notify:
+    - "Restart Apache"

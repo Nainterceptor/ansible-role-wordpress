@@ -1,2 +1,17 @@
 ---
 # defaults file for Nainterceptor.wordpress
+wordpress_path: "/var/www/wordpress"
+mysql_database: "wordpress"
+mysql_username: "wordpress"
+mysql_password: null
+mysql_hostname: localhost
+wordpress_prefix: "wp_"
+
+wordpress_auth_key: "put your unique phrase here"
+wordpress_secure_auth_key: "put your unique phrase here"
+wordpress_logged_in_key: "put your unique phrase here"
+wordpress_nonce_key: "put your unique phrase here"
+wordpress_auth_salt: "put your unique phrase here"
+wordpress_secure_auth_salt: "put your unique phrase here"
+wordpress_logged_in_salt: "put your unique phrase here"
+wordpress_nonce_salt: "put your unique phrase here"
