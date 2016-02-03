@@ -3,11 +3,23 @@
     ErrorLog "/var/log/httpd/wordpress-error_log"
     TransferLog "/var/log/httpd/wordpress-access_log"
 
-    <Directory />
-        Options +Indexes +FollowSymLinks +ExecCGI
+    <Directory {{ wordpress_path }}>
+        Options -Indexes +FollowSymLinks
         AllowOverride All
         Order deny,allow
         Allow from all
-    Require all granted
+        Require all granted
+        IndexIgnore *
+        ServerSignature Off
+        AddDefaultCharset UTF-8
+        <Files wp-config.php>
+            order allow,deny
+            deny from all
+        </Files>
+        <Files ~ "^.*\.([Hh][Tt][AaPp])">
+            order allow,deny
+            deny from all
+            satisfy all
+        </Files>
     </Directory>
 </VirtualHost>
