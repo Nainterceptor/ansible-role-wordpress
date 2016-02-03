@@ -21,6 +21,12 @@
         RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L]
         RewriteRule ^wp-includes/theme-compat/ - [F,L]
 
+        RewriteCond %{REQUEST_METHOD} GET
+        RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=http:// [OR]
+        RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=(\.\.//?)+ [OR]
+        RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=/([a-z0-9_.]//?)+ [NC]
+        RewriteRule .* - [F]
+
         <Files wp-config.php>
             order allow,deny
             deny from all
