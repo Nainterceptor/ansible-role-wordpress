@@ -31,6 +31,14 @@
   become: yes
   become_user: apache
 
+- name: "Prepare - create path uploads"
+  file:
+    dest: "{{ wordpress_path }}/wp-content/uploads"
+    state: directory
+    recurse: yes
+    group: apache
+    owner: apache
+
 - name: "Configure wordpress"
   template: src=../files/wp-config.php.j2 dest={{ wordpress_path }}/wp-config.php
 
