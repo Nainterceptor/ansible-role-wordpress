@@ -1,7 +1,10 @@
 <VirtualHost *:80>
     DocumentRoot "{{ wordpress_path }}"
-    ErrorLog "/var/log/httpd/wordpress-error_log"
-    TransferLog "/var/log/httpd/wordpress-access_log"
+{% if wordpress_domain != '' %}
+    ServerName {{ wordpress_domain }}
+{% endif %}
+    ErrorLog "/var/log/httpd/{{ wordpress_identifier }}-error_log"
+    TransferLog "/var/log/httpd/{{ wordpress_identifier }}-access_log"
 
     <Directory {{ wordpress_path }}>
         Options -Indexes +FollowSymLinks
