@@ -6,6 +6,7 @@ mysql_username: "wordpress"
 mysql_password: null
 mysql_hostname: localhost
 wordpress_prefix: "wp_"
+wordpress_301_redirect: "null"
 wordpress_domain: ""
 wordpress_identifier: "wordpress"
 

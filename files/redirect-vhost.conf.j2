@@ -1,0 +1,6 @@
+<VirtualHost *:80>
+    ServerName {{ wordpress_301_redirect }}
+    RedirectMatch permanent ^/(.*) http://{{ wordpress_domain }}/$1
+    ErrorLog "/var/log/httpd/{{ wordpress_identifier }}-error_log"
+    TransferLog "/var/log/httpd/{{ wordpress_identifier }}-access_log"
+</VirtualHost>

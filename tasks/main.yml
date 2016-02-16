@@ -53,6 +53,12 @@
   notify:
     - "Restart Apache"
 
+- name: "Place httpd 301 vhost"
+  template: src=../files/redirect-vhost.conf.j2 dest=/etc/httpd/conf.d/{{ wordpress_301_redirect }}.conf
+  when: wordpress_301_redirect != 'null'
+  notify:
+    - "Restart Apache"
+
 - name: "Prepare - remove welcome vhost"
   file:
     dest: "/etc/httpd/conf.d/welcome.conf"
